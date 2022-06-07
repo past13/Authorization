@@ -1,0 +1,12 @@
+AspNetCoreResourceServer/obj
+
+AspNetCoreResourceServer/bin
+/.vs
+/.vs/config/applicationhost.config
+**/bin/
+**/obj/
+/APIResourceServer.txt
+**/node_modules/
+/Sts.txt
+/api.txt
+**/wwwroot/*
