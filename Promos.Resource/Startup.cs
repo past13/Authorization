@@ -29,7 +29,7 @@ public class Startup
                     builder
                         .AllowCredentials()
                         .WithOrigins(
-                            "https://localhost:4200")
+                            "https://localhost:5000")
                         .SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
@@ -38,7 +38,7 @@ public class Startup
         
         var guestPolicy = new AuthorizationPolicyBuilder()
             .RequireAuthenticatedUser()
-            .RequireClaim("scope", "dataEventRecords")
+            .RequireClaim("scope", "barcodeRecords")
             .Build();
         
         services.AddAuthentication(options =>
@@ -52,13 +52,13 @@ public class Startup
                 // Note: the validation handler uses OpenID Connect discovery
                 // to retrieve the address of the introspection endpoint.
                 options.SetIssuer("https://localhost:44395/");
-                options.AddAudiences("rs_dataEventRecordsApi");
+                options.AddAudiences("oid_externalApi");
 
                 // Configure the validation handler to use introspection and register the client
                 // credentials used when communicating with the remote introspection endpoint.
                 options.UseIntrospection()
-                    .SetClientId("rs_dataEventRecordsApi")
-                    .SetClientSecret("dataEventRecordsSecret");
+                    .SetClientId("oid_externalApi")
+                    .SetClientSecret("externalApiSecret");
 
                 // Register the System.Net.Http integration.
                 options.UseSystemNetHttp();
@@ -71,7 +71,7 @@ public class Startup
         
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("dataEventRecordsPolicy", policyUser =>
+            options.AddPolicy("externalApiPolicy", policyUser =>
             {
                 policyUser.Requirements.Add(new RequireScope());
             });
@@ -104,20 +104,14 @@ public class Startup
             {
                 Title = "Resource server",
                 Version = "v1",
-                Description = "Recource Server",
-                Contact = new OpenApiContact
-                {
-                    Name = "damienbod",
-                    Email = string.Empty,
-                    Url = new Uri("https://damienbod.com/"),
-                },
+                Description = "Recource Server"
             });
         });
         
         services.AddControllers()
             .AddNewtonsoftJson();
 
-        services.AddScoped<DataEventRecordRepository>();
+        services.AddScoped<ExternalApiRepository>();
     }
 
     public void Configure(IApplicationBuilder app)

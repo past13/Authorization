@@ -17,7 +17,7 @@
     },
     "Promos.Resource": {
       "commandName": "Project",
-      "launchUrl": "https://localhost:44390/api/DataEventRecords",
+      "launchUrl": "https://localhost:44390/api/ExternalApi",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

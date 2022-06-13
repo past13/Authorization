@@ -5,44 +5,44 @@ using Promos.Resource.Repositories;
 
 namespace Promos.Resource.Controllers;
 
-[Authorize("dataEventRecordsPolicy")]
+[Authorize("externalApiPolicy")]
 [Route("api/[controller]")]
-public class DataEventRecordsController : Controller
+public class ExternalApiController : Controller
 {
-    private readonly DataEventRecordRepository _dataEventRecordRepository;
+    private readonly ExternalApiRepository _externalApiRepository;
 
-    public DataEventRecordsController(DataEventRecordRepository dataEventRecordRepository)
+    public ExternalApiController(ExternalApiRepository externalApiRepository)
     {
-        _dataEventRecordRepository = dataEventRecordRepository;
+        _externalApiRepository = externalApiRepository;
     }
 
     [HttpGet]
     public IActionResult Get()
     {
-        return Ok(_dataEventRecordRepository.GetAll());
+        return Ok(_externalApiRepository.GetAll());
     }
 
     [HttpGet("{id}")]
     public IActionResult Get(long id)
     {
-        return Ok(_dataEventRecordRepository.Get(id));
+        return Ok(_externalApiRepository.Get(id));
     }
 
     [HttpPost]
     public void Post([FromBody]ScannedBarcode value)
     {
-        _dataEventRecordRepository.Post(value);
+        _externalApiRepository.Post(value);
     }
 
     [HttpPut("{id}")]
     public void Put(long id, [FromBody]ScannedBarcode value)
     {
-        _dataEventRecordRepository.Put(id, value);
+        _externalApiRepository.Put(id, value);
     }
 
     [HttpDelete("{id}")]
     public void Delete(long id)
     {
-        _dataEventRecordRepository.Delete(id);
+        _externalApiRepository.Delete(id);
     }
 }

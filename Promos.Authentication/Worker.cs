@@ -25,25 +25,25 @@ namespace Promos.Authentication;
         {
             var manager = provider.GetRequiredService<IOpenIddictApplicationManager>();
 
-            // Angular UI client
-            if (await manager.FindByClientIdAsync("angularclient") is null)
+            // Dashboard UI client
+            if (await manager.FindByClientIdAsync("dashboardclient") is null)
             {
                 await manager.CreateAsync(new OpenIddictApplicationDescriptor
                 {
-                    ClientId = "angularclient",
+                    ClientId = "dashboardclient",
                     ConsentType = OpenIddictConstants.ConsentTypes.Explicit,
-                    DisplayName = "angular client PKCE",
+                    DisplayName = "dashboard client PKCE",
                     DisplayNames =
                     {
-                        [CultureInfo.GetCultureInfo("fr-FR")] = "Application cliente MVC"
+                        [CultureInfo.GetCultureInfo("en-US")] = "Application client MVC"
                     },
                     PostLogoutRedirectUris =
                     {
-                        new Uri("https://localhost:4200")
+                        new Uri("https://localhost:5000")
                     },
                     RedirectUris =
                     {
-                        new Uri("https://localhost:4200")
+                        new Uri("https://localhost:5000/auth-callback")
                     },
                     Permissions =
                     {
@@ -57,7 +57,7 @@ namespace Promos.Authentication;
                         OpenIddictConstants.Permissions.Scopes.Email,
                         OpenIddictConstants.Permissions.Scopes.Profile,
                         OpenIddictConstants.Permissions.Scopes.Roles,
-                        OpenIddictConstants.Permissions.Prefixes.Scope + "dataEventRecords"
+                        OpenIddictConstants.Permissions.Prefixes.Scope + "barcodeRecords"
                     },
                     Requirements =
                     {
@@ -67,12 +67,12 @@ namespace Promos.Authentication;
             }
 
             // API
-            if (await manager.FindByClientIdAsync("rs_dataEventRecordsApi") == null)
+            if (await manager.FindByClientIdAsync("oid_externalApi") == null)
             {
                 var descriptor = new OpenIddictApplicationDescriptor
                 {
-                    ClientId = "rs_dataEventRecordsApi",
-                    ClientSecret = "dataEventRecordsSecret",
+                    ClientId = "oid_externalApi",
+                    ClientSecret = "externalApiSecret",
                     Permissions =
                     {
                         OpenIddictConstants.Permissions.Endpoints.Introspection
@@ -87,19 +87,19 @@ namespace Promos.Authentication;
         {
             var manager = provider.GetRequiredService<IOpenIddictScopeManager>();
 
-            if (await manager.FindByNameAsync("dataEventRecords") is null)
+            if (await manager.FindByNameAsync("barcodeRecords") is null)
             {
                 await manager.CreateAsync(new OpenIddictScopeDescriptor
                 {
-                    DisplayName = "dataEventRecords API access",
+                    DisplayName = "external API access",
                     DisplayNames =
                     {
-                        [CultureInfo.GetCultureInfo("fr-FR")] = "Accès à l'API de démo"
+                        [CultureInfo.GetCultureInfo("en-US")] = "Access external api"
                     },
-                    Name = "dataEventRecords",
+                    Name = "barcodeRecords",
                     Resources =
                     {
-                        "rs_dataEventRecordsApi"
+                        "oid_externalApi"
                     }
                 });
             }

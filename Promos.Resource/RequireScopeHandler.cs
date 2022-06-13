@@ -15,7 +15,7 @@ public class RequireScopeHandler : AuthorizationHandler<RequireScope>
 
         var scopeClaim =  context.User.Claims.FirstOrDefault(t => t.Type == "scope");
 
-        if (scopeClaim != null && (context.User.HasScope("dataEventRecords")))
+        if (scopeClaim != null && (context.User.HasScope("barcodeRecords")))
         {
             context.Succeed(requirement);
         }

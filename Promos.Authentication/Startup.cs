@@ -67,7 +67,7 @@ public class Startup
                     builder
                         .AllowCredentials()
                         .WithOrigins(
-                            "https://localhost:4200")
+                            "https://localhost:5000")
                         .SetIsOriginAllowedToAllowWildcardSubdomains()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
@@ -81,12 +81,13 @@ public class Startup
             .AddOpenIdConnect("KeyCloak", "KeyCloak", options =>
             {
                 options.SignInScheme = "Identity.External";
+                
                 //Keycloak server
-                options.Authority = Configuration.GetSection("Keycloak")["ServerRealm"];
                 //Keycloak client ID
                 options.ClientId = Configuration.GetSection("Keycloak")["ClientId"];
                 //Keycloak client secret in user secrets for dev
                 options.ClientSecret = Configuration.GetSection("Keycloak")["ClientSecret"];
+                options.Authority = Configuration.GetSection("Keycloak")["ServerRealm"];
                 //Keycloak .wellknown config origin to fetch config
                 options.MetadataAddress = Configuration.GetSection("Keycloak")["Metadata"];
                 //Require keycloak to use SSL
@@ -136,8 +137,8 @@ public class Startup
                        .AllowHybridFlow()
                        .AllowRefreshTokenFlow();
 
-                // Mark the "email", "profile", "roles" and "dataEventRecords" scopes as supported scopes.
-                options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "dataEventRecords");
+                // Mark the "email", "profile", "roles" and "barcodeRecords" scopes as supported scopes.
+                options.RegisterScopes(Scopes.Email, Scopes.Profile, Scopes.Roles, "barcodeRecords");
 
                 // Register the signing and encryption credentials.
                 options.AddDevelopmentEncryptionCertificate()
