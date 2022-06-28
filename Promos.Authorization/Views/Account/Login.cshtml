@@ -1,0 +1,45 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Promos.Authorization.ViewModels.LoginViewModel
+
+@{
+    // ViewData["Title"] = Html.Translate("Login.Title");
+}
+
+<div class="main">
+    <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@Model.ReturnUrl" method="post" class="form clearfix">
+
+        @* <partial name="Components/Language" view-data="ViewData"/> *@
+
+        <div class="form__body">
+            <h1 class="text-center">Login.Header</h1>
+            <ul class="clearfix">
+                <li class="form__items">
+                    <label for="form-email" class="form__label">Login.Email</label>
+                    <input type="text" name="Email" id="form-email" value="@Model.Email">
+                </li>
+                <li class="form__items">
+                    <label for="form-pass" class="form__label">Login.Password</label>
+                    <input type="password" name="Password" id="form-pass">
+                </li>
+                <li class="form__items">
+                    <label for="form-rememberme" class="form__label">Login.Remember</label>
+                    <input type="checkbox" name="RememberMe" id="form-rememberme" value="true" data-val="true">
+                </li>
+
+                @* <li> *@
+                @*     <partial name="Components/Validation" view-data="ViewData"/> *@
+                @* </li> *@
+
+                <li class="form__items">
+                    <button type="submit" class="btn">Login.Submit</button>
+                </li>
+
+                @* <li class="form__items text-center"> *@
+                @*     <a asp-action="ResetPasswordRequest" asp-route-returnUrl="@Model.ReturnUrl" class="link">@Html.Translate("Login.ResetPassword")</a> *@
+                @* </li> *@
+                
+                <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+            </ul>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,25 @@
+@{
+    // ViewData["Title"] = Html.Translate("Logout.Title");
+    // ViewData["ShowLoginLink"] = true;
+}
+
+<div class="main">
+    <form asp-controller="Account" asp-action="ConfirmLogout" method="post" class="form clearfix">
+
+        @* <partial name="Components/Language" view-data="ViewData"/> *@
+
+        <div class="form__body">
+
+            <h1 class="text-center">Logout.Header</h1>
+            <p class="text-center">Logout.Text</p>
+
+            <ul class="clearfix">
+                <li class="form__items">
+                    <button type="submit" class="btn">Logout.Submit</button>
+                </li>
+            </ul>
+
+        </div>
+
+    </form>
+</div>
